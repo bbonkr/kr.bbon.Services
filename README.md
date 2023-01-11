@@ -1,5 +1,7 @@
 # kr.bbon.Services
 
+[![](https://img.shields.io/nuget/v/kr.bbon.Services)](https://www.nuget.org/packages/kr.bbon.Services) [![](https://img.shields.io/nuget/dt/kr.bbon.Services)](https://www.nuget.org/packages/kr.bbon.Services) [![publish to nuget](https://github.com/bbonkr/kr.bbon.Services/actions/workflows/build-tag.yaml/badge.svg)](https://github.com/bbonkr/kr.bbon.Services/actions/workflows/build-tag.yaml)
+
 ## Overview
 
 Implements frequently used service layers.

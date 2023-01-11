@@ -1,0 +1,61 @@
+name: 'Verify to Build'
+
+on:
+  pull_request:
+
+jobs:
+  verify-build:
+    name: "Verify to build 👉 ${{ matrix.os }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+      - name: Checkout 
+        uses: actions/checkout@v3
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+  reporting:
+    name: 'Reporing'
+    needs: [verify-build]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Add comment 
+        uses: unsplash/comment-on-pr@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          OUTPUT: "✅ This pull request is verified to build."
+        with:
+          msg: ${{ env.OUTPUT }}
+          check_for_duplicate_msg: false
+
+      - name: Notify to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          job_name: Verify to build
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always() # Pick up events even if the job fails or is canceled. 
+
+      - name: Notify to Microsoft Teams
+        uses: skitionek/notify-microsoft-teams@master
+        if: always()
+        with:
+          webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+          needs: ${{ toJson(needs) }}
+          job: ${{ toJson(job) }}
+          steps: ${{ toJson(steps) }}

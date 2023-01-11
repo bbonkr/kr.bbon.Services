@@ -8,7 +8,7 @@ Implements frequently used service layers.
 
 ### GitHubService
 
-Support to create GitHub issue
+Support to create GitHub issue.
 
 settings.json
 

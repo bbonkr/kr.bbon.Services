@@ -4,11 +4,11 @@
     <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Pon Cheol Ku (bbon@live.com)</Authors>
     <Company>bbon.kr</Company>
     <Copyright>bbon.kr. All rights reserved.</Copyright>
-    <Description>Helper for ASP.NET Core</Description>
+    <Description>Provides implementations of frequently used services.</Description>
     <PackageTags>dotnet github kr.bbon bbon bbon.kr</PackageTags>
     <RepositoryUrl>https://github.com/bbonkr/kr.bbon.Services.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -22,10 +22,15 @@
     <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0" />
-    <PackageReference Include="kr.bbon.Core" Version="1.6" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0" />
-    <PackageReference Include="System.Text.Json" Version="7.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="kr.bbon.Core" Version="1.6" />
   </ItemGroup>
 </Project>

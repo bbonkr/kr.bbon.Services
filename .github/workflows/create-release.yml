@@ -27,6 +27,10 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
+      - name: Test
+        run: |
+          dotnet test --logger "console;verbosity=normal"
+
       - name: Release 
         id: release_drafter
         uses: release-drafter/release-drafter@v5
@@ -37,6 +41,12 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+  reporting:
+    name: 'Reporing'
+    needs: [verify-build]
+    runs-on: ubuntu-latest
+    steps:
 
       - name: Notify to slack
         uses: 8398a7/action-slack@v3

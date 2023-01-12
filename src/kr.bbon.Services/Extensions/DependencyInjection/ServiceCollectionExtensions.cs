@@ -20,7 +20,8 @@ public static class ServiceCollectionExtensions
                 configuration.GetSection(GitHubOptions.Name).Bind(options);
             });
 
-        services.Add(new ServiceDescriptor(typeof(GitHubService), (sp) => sp.GetRequiredService<GitHubService>(), serviceLifetime));
+
+        services.Add(new ServiceDescriptor(typeof(GitHubService), typeof(GitHubService), serviceLifetime));
 
         return services;
     }

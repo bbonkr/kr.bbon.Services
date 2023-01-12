@@ -58,7 +58,7 @@ jobs:
 
   reporting:
     name: 'Reporing'
-    needs: [verify-build]
+    needs: [publish]
     runs-on: ubuntu-latest
     steps:
       

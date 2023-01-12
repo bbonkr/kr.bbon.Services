@@ -9,7 +9,7 @@ env:
   TARGET_PROJECT_FILE: kr.bbon.Services.csproj
 
 jobs:
-  publish:
+  build:
     name: build, pack & publish
     runs-on: ubuntu-latest
     steps:
@@ -61,7 +61,7 @@ jobs:
 
   reporting:
     name: 'Reporing'
-    needs: [verify-build]
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
 

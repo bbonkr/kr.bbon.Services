@@ -27,8 +27,9 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
-#       - name: Test
-#         run: dotnet test --no-build --verbosity normal
+      - name: Test
+        run: |
+          dotnet test --logger "console;verbosity=normal"
 
       - name: Get version 
         uses: bbonkr/get-version-action@v1.0.1
@@ -57,6 +58,12 @@ jobs:
         if: ${{ steps.git_tag_check.outputs.tag != '' }}
         run: |
           echo "Tag ${{ steps.git_tag_check.outputs.tag }} is exists."
+
+  reporting:
+    name: 'Reporing'
+    needs: [verify-build]
+    runs-on: ubuntu-latest
+    steps:
 
       - name: Notify to slack
         uses: 8398a7/action-slack@v3

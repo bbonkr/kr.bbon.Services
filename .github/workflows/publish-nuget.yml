@@ -28,6 +28,10 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
+      - name: Test
+        run: |
+          dotnet test --logger "console;verbosity=normal"        
+
 #       - name: Test
 #         run: dotnet test --no-build --verbosity normal
 
@@ -52,6 +56,12 @@ jobs:
           dotnet pack -c Release -o .
           dotnet nuget push *.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
+  reporting:
+    name: 'Reporing'
+    needs: [verify-build]
+    runs-on: ubuntu-latest
+    steps:
+      
       - name: Notify to slack
         uses: 8398a7/action-slack@v3
         with:
